@@ -32,7 +32,7 @@ angular.module('nya.bootstrap.select',[])
 
         // store data- attribute options of select
         var selectorOptions = {};
-        var BS_ATTR = ['container', 'countSelectedText', 'dropupAuto', 'header', 'hideDisabled', 'selectedTextFormat', 'size', 'showSubtext', 'showIcon', 'showContent', 'style', 'title', 'width', 'disabled'];
+        var BS_ATTR = ['container', 'countSelectedText', 'dropupAuto', 'header', 'hideDisabled', 'selectedTextFormat', 'size', 'showSubtext', 'showIcon', 'showContent', 'style', 'title', 'width', 'disabled', 'mobile', 'inlineTitle'];
 
         var checkSelectorOptionsEquality = function() {
           var isEqual = true;
@@ -220,11 +220,13 @@ angular.module('nya.bootstrap.select',[])
 
         function buildSelector() {
           // build new selector. if previous select exists. remove previous data and DOM
-          var oldSelectPicker = element.data('selectpicker');
-          if(oldSelectPicker) {
-            oldSelectPicker.$menu.parent().remove();
-            oldSelectPicker.$newElement.remove();
-            element.removeData('selectpicker');
+          if (!element.hasClass('mobile-device')){
+            var oldSelectPicker = element.data('selectpicker');
+            if(oldSelectPicker) {
+              oldSelectPicker.$menu.parent().remove();
+              oldSelectPicker.$newElement.remove();
+              element.removeData('selectpicker');
+            }
           }
           element.selectpicker();
           if(!!valuesFn && !track) {
