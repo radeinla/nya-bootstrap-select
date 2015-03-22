@@ -11,7 +11,7 @@
   ],
   "dependencies": {
     "angular": "*",
-    "bootstrap-select": "<1.6.0"
+    "bootstrap-select": "https://github.com/bazzoink/bootstrap-select.git#custom.1.6.4"
   },
   "devDependencies": {
     "bootstrap-css": "~3.0",
