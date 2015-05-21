@@ -18,12 +18,14 @@ angular.module('nya.bootstrap.select',[])
 
       link: function(scope, element, attrs, ctrls) {
         var optionsExp = attrs.ngOptions;
-        var valuesFn, match, track, groupBy;
+        var valuesFn, match, track, groupBy, valueFn, valueName;
         if(optionsExp && (match = optionsExp.match(NG_OPTIONS_REGEXP))) {
           groupBy = match[3];
-          console.log(optionsExp, groupBy);
+          // console.log(optionsExp, groupBy);
           valuesFn = $parse(match[7]);
           track = match[8];
+          valueFn = $parse(match[1]);
+          valueName = match[4];
         }
         var ngCtrl = ctrls[0];
         var selectCtrl = ctrls[1];
@@ -180,8 +182,16 @@ angular.module('nya.bootstrap.select',[])
 
         function indexInArray(value, array) {
           for(var i = 0; i < array.length; i++) {
-            if(angular.equals(value, array[i])) {
-              return i;
+            if (valueFn) {
+              var locals = {};
+              locals[valueName] = array[i];
+              if(angular.equals(value, valueFn(scope, locals))) {
+                return i;
+              }
+            } else {
+              if(angular.equals(value, array[i])) {
+                return i;
+              }
             }
           }
           return -1;
